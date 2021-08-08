@@ -40,3 +40,7 @@ To activate: ```source ./env/bin/activate```
 ## Bring docker down to reinstall
 
 ```docker-compose -f docker-compose.yml down```
+
+## view app at 
+
+```http://localhost:8000/```

@@ -2,10 +2,11 @@
 #!/bin/sh
 set -e
 
-python manage.py wait_for_db
-
+echo "Apply database migrations"
 python manage.py migrate
 
-# python manage.py collectstatic --noinput -v 0
+# Start server
+echo "Starting server"
+python manage.py runserver 0.0.0.0:8000
 
 exec "$@"
