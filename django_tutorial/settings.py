@@ -1,26 +1,12 @@
 import os
-import environ
 
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# need to change this later when switch to docker
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, False)
-)
-
-# reading .env file
-environ.Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
-
-# False if not in os.environ
-DEBUG = env('DEBUG')
-
-# Raises django's ImproperlyConfigured exception if SECRET_KEY not in os.environ
-SECRET_KEY = env.str('SECRET_KEY', 'sample_unsafe_secret')
-
-ALLOWED_HOSTS = env.str("DJANGO_ALLOWED_HOSTS", 'localhost').split(" ")
+DEBUG = int(os.environ.get("DEBUG", False))
+SECRET_KEY = os.environ.get("SECRET_KEY", 'hodor')
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", '*').split(" ")
 
 # Application definition
 
@@ -72,11 +58,14 @@ WSGI_APPLICATION = 'django_tutorial.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
+        "NAME": os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, "db.sqlite3")),
+        "USER": os.environ.get("SQL_USER", "user"),
+        "PASSWORD": os.environ.get("SQL_PASSWORD", "password"),
+        "HOST": os.environ.get("SQL_HOST", "localhost"),
+        "PORT": os.environ.get("SQL_PORT", "5432"),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

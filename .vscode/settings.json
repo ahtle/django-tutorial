@@ -1,0 +1,14 @@
+{
+  "python.linting.pylintEnabled": true,
+  "python.linting.pylintArgs": [
+      "--django-settings-module=provider_search.settings",
+      "--load-plugins=pylint_django",
+  ],
+  "eslint.validate": [
+      "javascript",
+      "vue"
+  ],
+  "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+  },
+}
